@@ -17,6 +17,11 @@ router.get('/customer', (req, res, next) => {
     res.render('customer');
 });
 
+/* GET constituent page. */
+router.get('/constituent', (req, res, next) => {
+    res.render('constituent');
+});
+
 /* GET graph data */
 router.get('/data', (req, res, next) => {
     dataset.getDate().then(date => {
