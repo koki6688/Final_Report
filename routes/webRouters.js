@@ -19,7 +19,9 @@ router.get('/customer', (req, res, next) => {
 
 /* GET constituent page. */
 router.get('/constituent', (req, res, next) => {
-    res.render('constituent');
+    dataset.getConstituent().then(result => {
+        res.render('constituent', {result:result});
+    });
 });
 
 /* GET graph data */

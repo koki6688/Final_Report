@@ -22,15 +22,14 @@
     <!-- CSS Files -->
     <link href="./assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet"/>
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="./assets/demo/demo.css" rel="stylesheet"/>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <link href="./stylesheets/index.css" rel="stylesheet"/>
+    <link href="./stylesheets/constituent.css" rel="stylesheet"/>
 </head>
 
-<body class="" onload="displaychart()">
+<body class="hm-gradient">
 <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
 
@@ -41,13 +40,13 @@
         </div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/">
                         <i class="material-icons">dashboard</i>
                         <p>SmartBeta指數</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="/performance">
                         <i class="material-icons">person</i>
                         <p>績效比較</p>
@@ -59,19 +58,19 @@
                         <p>技術指標</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="/customer">
                         <i class="material-icons">library_books</i>
                         <p>目標客群</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="/process">
                         <i class="material-icons">bubble_chart</i>
                         <p>編制流程</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/constituent">
                         <i class="material-icons">location_ons</i>
                         <p>成分股比例</p>
@@ -98,48 +97,68 @@
             </ul>
         </div>
     </div>
+
     <div class="main-panel">
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <canvas id="line-chart" width="800" height="450"></canvas>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title " style="font-size: 18px">Smart Beta 每期前 10 成分股</h4>
+                                <p class="card-category" style="font-size: 14px"></p>
+                            </div>
+                            <div class="card-body" style="font-size: 16px">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class=" text-primary">
+                                        <tr>
+                                            <th style="font-size: 16px">
+                                                排名
+                                            </th>
+                                            <th style="font-size: 16px">
+                                                調整日期
+                                            </th>
+                                            <th style="font-size: 16px">
+                                                成分股代碼
+                                            </th>
+                                            <th style="font-size: 16px">
+                                                成分股名稱
+                                            </th>
+                                            <th style="font-size: 16px">
+                                                成分股占比
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                        <% for(let i = 0;i < 10; i++){ %>
+                                            <td>
+                                                <%= i + 1 %>
+                                            </td>
+                                            <td>
+                                                <%= result[0][i] %>
+                                            </td>
+                                            <td>
+                                                <%= result[1][i] %>
+                                            </td>
+                                            <td>
+                                                <%= result[2][i] %>
+                                            </td>
+                                            <td class="text-primary">
+                                                <%= result[3][i] %>
+                                            </td>
+                                            </tr>
+                                        <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    function displaychart() {
-        $(function () {
-            $.ajax({
-                type: 'GET',
-                url: '/data',
-                success: function (data) {
-                    new Chart(document.getElementById("line-chart"), {
-                        type: 'line',
-                        data: {
-                            labels: data.date,
-                            datasets: [{
-                                data: data.index,
-                                label: "SmartBeta",
-                                borderColor: "#9c27b0",
-                                fill: false
-                            }]
-                        },
-                        options: {
-                            title: {
-                                display: true,
-                                text: 'SmartBeta指數(2013-2018)'
-                            }
-                        }
-                    });
-                }
-
-            });
-        });
-    }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</div>
 </body>
-
 </html>
