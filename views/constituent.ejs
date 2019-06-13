@@ -99,9 +99,107 @@
     </div>
 
     <div class="main-panel">
+
         <div class="content">
+            <form id="app-cover" action="/constituent" method="post">
+                <div id="select-box">
+                    <input type="checkbox" id="options-view-button">
+                    <div id="select-button" class="brd">
+                        <div id="selected-value">
+                            <span><%= range %></span>
+                        </div>
+                        <input name="range" id="range" hidden>
+                        <div id="chevrons">
+                            <i class="fas fa-chevron-up"></i>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div id="options">
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2012/12/19~2013/06/19">
+                            <input class="s-c bottom" type="radio" name="date" value="2012/12/19~2013/06/19">
+                            <span class="label">2012/12/19~2013/06/19</span>
+                            <span class="opt-val">2012/12/19~2013/06/19</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2013/06/20~2013/12/17">
+                            <input class="s-c bottom" type="radio" name="date" value="2013/06/20~2013/12/17">
+                            <span class="label">2013/06/20~2013/12/17</span>
+                            <span class="opt-val">2013/06/20~2013/12/17</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2013/12/18~2014/06/18">
+                            <input class="s-c bottom" type="radio" name="date" value="2013/12/18~2014/06/18">
+                            <span class="label">2013/12/18~2014/06/18</span>
+                            <span class="opt-val">2013/12/18~2014/06/18</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2014/06/19~2014/12/16">
+                            <input class="s-c bottom" type="radio" name="date" value="2014/06/19~2014/12/16">
+                            <span class="label">2014/06/19~2014/12/16</span>
+                            <span class="opt-val">2014/06/19~2014/12/16</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2014/12/17~2015/06/16">
+                            <input class="s-c bottom" type="radio" name="date" value="2014/12/17~2015/06/16">
+                            <span class="label">2014/12/17~2015/06/16</span>
+                            <span class="opt-val">2014/12/17~2015/06/16</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2015/06/17~2015/12/16">
+                            <input class="s-c bottom" type="radio" name="date" value="2015/06/17~2015/12/16">
+                            <span class="label">2015/06/17~2015/12/16</span>
+                            <span class="opt-val">2015/06/17~2015/12/16</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2015/12/17~2016/06/19">
+                            <input class="s-c bottom" type="radio" name="date" value="2015/12/17~2016/06/19">
+                            <span class="label">2015/12/17~2016/06/19</span>
+                            <span class="opt-val">2015/12/17~2016/06/19</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2016/06/20~2016/12/18">
+                            <input class="s-c bottom" type="radio" name="date" value="2016/06/20~2016/12/18">
+                            <span class="label">2016/06/20~2016/12/18</span>
+                            <span class="opt-val">2016/06/20~2016/12/18</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2016/12/19~2017/06/15">
+                            <input class="s-c bottom" type="radio" name="date" value="2016/12/19~2017/06/15">
+                            <span class="label">2016/12/19~2017/06/15</span>
+                            <span class="opt-val">2016/12/19~2017/06/15</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2017/06/16~2017/12/18">
+                            <input class="s-c bottom" type="radio" name="date" value="2017/06/16~2017/12/18">
+                            <span class="label">2017/06/16~2017/12/18</span>
+                            <span class="opt-val">2017/06/16~2017/12/18</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2017/12/19~2018/06/19">
+                            <input class="s-c bottom" type="radio" name="date" value="2017/12/19~2018/06/19">
+                            <span class="label">2017/12/19~2018/06/19</span>
+                            <span class="opt-val">2017/12/19~2018/06/19</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2018/06/20~2018/12/18">
+                            <input class="s-c bottom" type="radio" name="date" value="2018/06/20~2018/12/18">
+                            <span class="label">2018/06/20~2018/12/18</span>
+                            <span class="opt-val">2018/06/20~2018/12/18</span>
+                        </div>
+                        <div class="option" onclick="getConstituent();">
+                            <input class="s-c top" type="radio" name="date" value="2018/12/19~2018/12/31">
+                            <input class="s-c bottom" type="radio" name="date" value="2018/12/19~2018/12/31">
+                            <span class="label">2018/12/19~2018/12/31</span>
+                            <span class="opt-val">2018/12/19~2018/12/31</span>
+                        </div>
+                        <div id="option-bg"></div>
+                    </div>
+                </div>
+            </form>
             <div class="container-fluid">
                 <div class="row">
+
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
@@ -135,16 +233,16 @@
                                                 <%= i + 1 %>
                                             </td>
                                             <td>
-                                                <%= result[0][i] %>
+                                                <%= result[i][0] %>
                                             </td>
                                             <td>
-                                                <%= result[1][i] %>
+                                                <%= result[i][1] %>
                                             </td>
                                             <td>
-                                                <%= result[2][i] %>
+                                                <%= result[i][2] %>
                                             </td>
                                             <td class="text-primary">
-                                                <%= result[3][i] %>
+                                                <%= result[i][3] %>
                                             </td>
                                             </tr>
                                         <% } %>
@@ -160,5 +258,17 @@
     </div>
 </div>
 </div>
+<script>
+    function getConstituent() {
+        document.getElementById("options-view-button").click();
+        const date = document.getElementsByName("date");
+        for (let i = 0; i < date.length; i++) {
+            if (date[i].checked) {
+                document.getElementById("range").value = date[i].value;
+            }
+        }
+        document.getElementById("app-cover").submit();
+    }
+</script>
 </body>
 </html>

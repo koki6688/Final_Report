@@ -19,9 +19,27 @@ router.get('/customer', (req, res, next) => {
 
 /* GET constituent page. */
 router.get('/constituent', (req, res, next) => {
-    dataset.getConstituent().then(result => {
-        res.render('constituent', {result:result});
+    dataset.getConstituent().then(results => {
+        let select_date = results.filter(result => {
+            return result[0] === `2012/12/19`;
+        });
+        res.render('constituent', {result: select_date, range: `2012/12/19~2013/06/19`});
     });
+});
+
+/* POST constituent page. */
+router.post('/constituent', (req, res, next) => {
+    dataset.getConstituent().then(results => {
+        let select_date = results.filter(result => {
+            return `${req.body.date}`.substring(0,10) === result[0];
+        });
+        res.render('constituent', {result: select_date, range: req.body.range});
+    });
+});
+
+/* GET performance page. */
+router.get('/performance', (req, res, next) => {
+    res.render('performance');
 });
 
 /* GET graph data */
