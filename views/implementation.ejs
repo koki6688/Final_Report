@@ -27,7 +27,7 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <link href="./stylesheets/performance.css" rel="stylesheet"/>
+    <link href="./stylesheets/implementation.css" rel="stylesheet"/>
 </head>
 
 <body class="hm-gradient" onload="displaychart();">
@@ -47,13 +47,13 @@
                         <p>SmartBeta指數</p>
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/performance">
                         <i class="material-icons">person</i>
                         <p>指數績效比較</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/implementation">
                         <i class="material-icons">content_paste</i>
                         <p>ETF績效比較</p>
@@ -101,42 +101,6 @@
 
     <div class="main-panel">
         <div class="content">
-            <form id="app-cover" action="/performance" method="post">
-                <div id="select-box">
-                    <input type="checkbox" id="options-view-button">
-                    <div id="select-button" class="brd">
-                        <div id="selected-value">
-                            <span><%=range%></span>
-                        </div>
-                        <input name="range" id="range" hidden>
-                        <div id="chevrons">
-                            <i class="fas fa-chevron-up"></i>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </div>
-                    <div id="options">
-                        <div class="option" onclick="getPerformance();">
-                            <input class="s-c top" type="radio" name="date" value="performance">
-                            <input class="s-c bottom" type="radio" name="date" value="performance">
-                            <span class="label">整體績效</span>
-                            <span class="opt-val">整體績效</span>
-                        </div>
-                        <div class="option" onclick="getPerformance();">
-                            <input class="s-c top" type="radio" name="date" value="performance-1y">
-                            <input class="s-c bottom" type="radio" name="date" value="performance-1y">
-                            <span class="label">一年期績效</span>
-                            <span class="opt-val">一年期績效</span>
-                        </div>
-                        <div class="option" onclick="getPerformance();">
-                            <input class="s-c top" type="radio" name="date" value="performance-3y">
-                            <input class="s-c bottom" type="radio" name="date" value="performance-3y">
-                            <span class="label">三年期績效</span>
-                            <span class="opt-val">三年期績效</span>
-                        </div>
-                        <div id="option-bg"></div>
-                    </div>
-                </div>
-            </form>
             <div class="container-fluid">
                 <div class="row">
                     <div class="carousel-container">
@@ -174,24 +138,9 @@
 <script>
     function displaychart() {
         $(function () {
-            let performanceRange = `<%=range%>`;
-            let url ;
-
-            switch (performanceRange) {
-                case "一年期績效":
-                    url = '/performanceData_1y';
-                    break;
-                case "三年期績效":
-                    url = '/performanceData_3y';
-                    break;
-                default:
-                    url='/performanceData';
-                    break;
-            }
-
             $.ajax({
                 type: 'GET',
-                url: url,
+                url: '/performanceData',
                 success: function (data) {
                     const performance = data.performance;
                     new Chart(document.getElementById("bar-chart-1"), {

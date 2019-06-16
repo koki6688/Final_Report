@@ -55,8 +55,14 @@ router.post('/performance', (req, res, next) => {
             res.render('performance',{range: "整體績效"});
             break;
     }
-
 });
+
+/* GET implementation page. */
+router.get('/implementation', (req, res, next) => {
+    res.render('implementation');
+});
+
+
 
 /* GET index graph data */
 router.get('/indexData', (req, res, next) => {
