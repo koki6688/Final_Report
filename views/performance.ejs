@@ -27,10 +27,10 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <link href="./stylesheets/index.css" rel="stylesheet"/>
+    <link href="./stylesheets/performance.css" rel="stylesheet"/>
 </head>
 
-<body class="" onload="displaychart()">
+<body class="hm-gradient" onload="displaychart();">
 <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
 
@@ -41,13 +41,13 @@
         </div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/">
                         <i class="material-icons">dashboard</i>
                         <p>SmartBeta指數</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="/performance">
                         <i class="material-icons">person</i>
                         <p>績效比較</p>
@@ -59,13 +59,13 @@
                         <p>技術指標</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="/customer">
                         <i class="material-icons">library_books</i>
                         <p>目標客群</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="/process">
                         <i class="material-icons">bubble_chart</i>
                         <p>編制流程</p>
@@ -98,41 +98,89 @@
             </ul>
         </div>
     </div>
+
     <div class="main-panel">
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <canvas id="line-chart" width="800" height="400"></canvas>
+                    <div class="carousel-container">
+                        <div class="carousel my-carousel carousel--translate"><input class="carousel__activator" type="radio" name="carousel" id="F" checked="checked" /><input class="carousel__activator" type="radio" name="carousel" id="G" /><input class="carousel__activator" type="radio" name="carousel" id="H" /><input class="carousel__activator"
+                                                                                                                                                                                                                                                                                                                                  type="radio" name="carousel" id="I" />
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="F"></label><label class="carousel__control carousel__control--forward" for="G"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="G"></label><label class="carousel__control carousel__control--forward" for="H"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="H"></label><label class="carousel__control carousel__control--forward" for="I"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="I"></label><label class="carousel__control carousel__control--forward" for="F"></label></div>
+                            <div class="carousel__track">
+                                <li class="carousel__slide">
+                                    <canvas id="bar-chart-1" style="width: 100%;height: 100%"></canvas>
+                                </li>
+                                <li class="carousel__slide">
+                                    <canvas id="bar-chart-2" style="width: 100%;height: 100%"></canvas>
+                                </li>
+                                <li class="carousel__slide">
+                                    <h1>H</h1>
+                                </li>
+                                <li class="carousel__slide">
+                                    <h1>I</h1>
+                                </li>
+                            </div>
+                            <div class="carousel__indicators"><label class="carousel__indicator" for="F"></label><label class="carousel__indicator" for="G"></label><label class="carousel__indicator" for="H"></label><label class="carousel__indicator" for="I"></label></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
+<script src="./javascripts/performance.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
     function displaychart() {
         $(function () {
             $.ajax({
                 type: 'GET',
-                url: '/indexData',
+                url: '/performanceData',
                 success: function (data) {
-                    new Chart(document.getElementById("line-chart"), {
-                        type: 'line',
+                    new Chart(document.getElementById("bar-chart-1"), {
+                        type: 'horizontalBar',
                         data: {
-                            labels: data.date,
-                            datasets: [{
-                                data: data.index,
-                                label: "SmartBeta",
-                                borderColor: "#9c27b0",
-                                fill: false
-                            }]
+                            labels: ["Africa", "Asia", "Europe"],
+                            datasets: [
+                                {
+                                    label: "Population (millions)",
+                                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+                                    data: [2478,5267,734]
+                                }
+                            ]
                         },
                         options: {
-                            legend: {
-                                display: false,
-                            },
+                            legend: { display: false },
                             title: {
                                 display: true,
-                                text: 'SmartBeta指數(2013-2018)',
+                                text: 'Predicted world population (millions) in 2050',
+                                fontSize: 40
+                            }
+                        }
+                    });
+
+                    new Chart(document.getElementById("bar-chart-2"), {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: ["Europe", "Latin America", "North America"],
+                            datasets: [
+                                {
+                                    label: "Population (millions)",
+                                    backgroundColor: ["#3cba9f","#e8c3b9","#c45850"],
+                                    data: [734,784,433]
+                                }
+                            ]
+                        },
+                        options: {
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: 'Predicted world population (millions) in 2050',
                                 fontSize: 40
                             }
                         }
@@ -143,7 +191,6 @@
         });
     }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </body>
 
 </html>

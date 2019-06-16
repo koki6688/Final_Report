@@ -42,13 +42,18 @@ router.get('/performance', (req, res, next) => {
     res.render('performance');
 });
 
-/* GET graph data */
-router.get('/data', (req, res, next) => {
+/* GET index graph data */
+router.get('/indexData', (req, res, next) => {
     dataset.getDate().then(date => {
         dataset.getIndex().then(index => {
             res.send({date: date, index: index});
         });
     });
+});
+
+/* GET performance graph data */
+router.get('/performanceData', (req, res, next) => {
+    res.send({index: "a"});
 });
 
 module.exports = router;
