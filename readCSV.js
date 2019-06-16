@@ -11,7 +11,6 @@ const getDate = () => {
                 resolve(result);
             });
     });
-
 };
 
 const getIndex = () => {
@@ -44,7 +43,66 @@ const getConstituent = () => {
             });
     });
 };
-module.exports = {getDate, getIndex, getConstituent};
+
+const getPerformance = () => {
+    return new Promise(resolve => {
+        const result = [];
+
+        csv.fromPath("./Datasets/performance.csv")
+            .on("data", results => {
+                let index = results[0];
+                let annualizedReturn = results[2];
+                let annualizedSTD = results[3];
+                let sharpeRatio = results[4];
+                let treynorRatio = results[5];
+                result.push([index, annualizedReturn, annualizedSTD, sharpeRatio, treynorRatio]);
+            })
+            .on("end", () => {
+                resolve(result);
+            });
+    });
+};
+
+const getPerformance1y = () => {
+    return new Promise(resolve => {
+        const result = [];
+
+        csv.fromPath("./Datasets/performance_1y.csv")
+            .on("data", results => {
+                let index = results[0];
+                let annualizedReturn = results[2];
+                let annualizedSTD = results[3];
+                let sharpeRatio = results[4];
+                let treynorRatio = results[5];
+                result.push([index, annualizedReturn, annualizedSTD, sharpeRatio, treynorRatio]);
+            })
+            .on("end", () => {
+                resolve(result);
+            });
+    });
+};
+
+const getPerformance3y = () => {
+    return new Promise(resolve => {
+        const result = [];
+
+        csv.fromPath("./Datasets/performance_3y.csv")
+            .on("data", results => {
+                let index = results[0];
+                let annualizedReturn = results[2];
+                let annualizedSTD = results[3];
+                let sharpeRatio = results[4];
+                let treynorRatio = results[5];
+                result.push([index, annualizedReturn, annualizedSTD, sharpeRatio, treynorRatio]);
+            })
+            .on("end", () => {
+                resolve(result);
+            });
+    });
+};
+
+
+module.exports = {getDate, getIndex, getConstituent, getPerformance, getPerformance1y, getPerformance3y};
 
 
 

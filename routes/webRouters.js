@@ -31,7 +31,7 @@ router.get('/constituent', (req, res, next) => {
 router.post('/constituent', (req, res, next) => {
     dataset.getConstituent().then(results => {
         let select_date = results.filter(result => {
-            return `${req.body.date}`.substring(0,10) === result[0];
+            return `${req.body.date}`.substring(0, 10) === result[0];
         });
         res.render('constituent', {result: select_date, range: req.body.range});
     });
@@ -39,7 +39,23 @@ router.post('/constituent', (req, res, next) => {
 
 /* GET performance page. */
 router.get('/performance', (req, res, next) => {
-    res.render('performance');
+    res.render('performance',{range: "整體績效"});
+});
+
+/* POST performance page. */
+router.post('/performance', (req, res, next) => {
+    switch (req.body.range) {
+        case "performance-1y":
+            res.render('performance',{range: "一年期績效"});
+            break;
+        case "performance-3y":
+            res.render('performance',{range: "三年期績效"});
+            break;
+        default:
+            res.render('performance',{range: "整體績效"});
+            break;
+    }
+
 });
 
 /* GET index graph data */
@@ -53,7 +69,24 @@ router.get('/indexData', (req, res, next) => {
 
 /* GET performance graph data */
 router.get('/performanceData', (req, res, next) => {
-    res.send({index: "a"});
+    dataset.getPerformance().then(performance => {
+        res.send({performance: performance});
+    });
+});
+
+/* GET performance 1y graph data */
+router.get('/performanceData_1y', (req, res, next) => {
+    dataset.getPerformance1y().then(performance => {
+        res.send({performance: performance});
+    });
+});
+
+
+/* GET performance graph data */
+router.get('/performanceData_3y', (req, res, next) => {
+    dataset.getPerformance3y().then(performance => {
+        res.send({performance: performance});
+    });
 });
 
 module.exports = router;

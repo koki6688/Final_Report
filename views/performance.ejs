@@ -101,15 +101,51 @@
 
     <div class="main-panel">
         <div class="content">
+            <form id="app-cover" action="/performance" method="post">
+                <div id="select-box">
+                    <input type="checkbox" id="options-view-button">
+                    <div id="select-button" class="brd">
+                        <div id="selected-value">
+                            <span><%=range%></span>
+                        </div>
+                        <input name="range" id="range" hidden>
+                        <div id="chevrons">
+                            <i class="fas fa-chevron-up"></i>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div id="options">
+                        <div class="option" onclick="getPerformance();">
+                            <input class="s-c top" type="radio" name="date" value="performance">
+                            <input class="s-c bottom" type="radio" name="date" value="performance">
+                            <span class="label">整體績效</span>
+                            <span class="opt-val">整體績效</span>
+                        </div>
+                        <div class="option" onclick="getPerformance();">
+                            <input class="s-c top" type="radio" name="date" value="performance-1y">
+                            <input class="s-c bottom" type="radio" name="date" value="performance-1y">
+                            <span class="label">一年期績效</span>
+                            <span class="opt-val">一年期績效</span>
+                        </div>
+                        <div class="option" onclick="getPerformance();">
+                            <input class="s-c top" type="radio" name="date" value="performance-3y">
+                            <input class="s-c bottom" type="radio" name="date" value="performance-3y">
+                            <span class="label">三年期績效</span>
+                            <span class="opt-val">三年期績效</span>
+                        </div>
+                        <div id="option-bg"></div>
+                    </div>
+                </div>
+            </form>
             <div class="container-fluid">
                 <div class="row">
                     <div class="carousel-container">
                         <div class="carousel my-carousel carousel--translate"><input class="carousel__activator" type="radio" name="carousel" id="F" checked="checked" /><input class="carousel__activator" type="radio" name="carousel" id="G" /><input class="carousel__activator" type="radio" name="carousel" id="H" /><input class="carousel__activator"
                                                                                                                                                                                                                                                                                                                                   type="radio" name="carousel" id="I" />
-                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="F"></label><label class="carousel__control carousel__control--forward" for="G"></label></div>
-                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="G"></label><label class="carousel__control carousel__control--forward" for="H"></label></div>
-                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="H"></label><label class="carousel__control carousel__control--forward" for="I"></label></div>
-                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="I"></label><label class="carousel__control carousel__control--forward" for="F"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="I"></label><label class="carousel__control carousel__control--forward" for="G"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="F"></label><label class="carousel__control carousel__control--forward" for="H"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="G"></label><label class="carousel__control carousel__control--forward" for="I"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="H"></label><label class="carousel__control carousel__control--forward" for="F"></label></div>
                             <div class="carousel__track">
                                 <li class="carousel__slide">
                                     <canvas id="bar-chart-1" style="width: 100%;height: 100%"></canvas>
@@ -118,10 +154,10 @@
                                     <canvas id="bar-chart-2" style="width: 100%;height: 100%"></canvas>
                                 </li>
                                 <li class="carousel__slide">
-                                    <h1>H</h1>
+                                    <canvas id="bar-chart-3" style="width: 100%;height: 100%"></canvas>
                                 </li>
                                 <li class="carousel__slide">
-                                    <h1>I</h1>
+                                    <canvas id="bar-chart-4" style="width: 100%;height: 100%"></canvas>
                                 </li>
                             </div>
                             <div class="carousel__indicators"><label class="carousel__indicator" for="F"></label><label class="carousel__indicator" for="G"></label><label class="carousel__indicator" for="H"></label><label class="carousel__indicator" for="I"></label></div>
@@ -138,19 +174,36 @@
 <script>
     function displaychart() {
         $(function () {
+            let performanceRange = `<%=range%>`;
+            let url ;
+
+            switch (performanceRange) {
+                case "一年期績效":
+                    url = '/performanceData_1y';
+                    break;
+                case "三年期績效":
+                    url = '/performanceData_3y';
+                    break;
+                default:
+                    url='/performanceData';
+                    break;
+            }
+
             $.ajax({
                 type: 'GET',
-                url: '/performanceData',
+                url: url,
                 success: function (data) {
+                    console.log(performanceRange);
+                    const performance = data.performance;
                     new Chart(document.getElementById("bar-chart-1"), {
                         type: 'horizontalBar',
                         data: {
-                            labels: ["Africa", "Asia", "Europe"],
+                            labels: [performance[2][0],performance[0][0], performance[1][0]],
                             datasets: [
                                 {
-                                    label: "Population (millions)",
-                                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-                                    data: [2478,5267,734]
+                                    label: "年化報酬率",
+                                    backgroundColor: ["#8e5ea2","#3e95cd", "#3cba9f"],
+                                    data: [performance[2][1],performance[0][1], performance[1][1] ]
                                 }
                             ]
                         },
@@ -158,7 +211,7 @@
                             legend: { display: false },
                             title: {
                                 display: true,
-                                text: 'Predicted world population (millions) in 2050',
+                                text: '年化報酬率績效比較',
                                 fontSize: 40
                             }
                         }
@@ -167,12 +220,12 @@
                     new Chart(document.getElementById("bar-chart-2"), {
                         type: 'horizontalBar',
                         data: {
-                            labels: ["Europe", "Latin America", "North America"],
+                            labels: [performance[2][0],performance[0][0], performance[1][0]],
                             datasets: [
                                 {
-                                    label: "Population (millions)",
-                                    backgroundColor: ["#3cba9f","#e8c3b9","#c45850"],
-                                    data: [734,784,433]
+                                    label: "年化標準差",
+                                    backgroundColor: ["#8e5ea2","#3e95cd", "#3cba9f"],
+                                    data: [performance[2][2],performance[0][2], performance[1][2] ]
                                 }
                             ]
                         },
@@ -180,7 +233,51 @@
                             legend: { display: false },
                             title: {
                                 display: true,
-                                text: 'Predicted world population (millions) in 2050',
+                                text: '年化標準差比較',
+                                fontSize: 40
+                            }
+                        }
+                    });
+
+                    new Chart(document.getElementById("bar-chart-3"), {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: [performance[2][0],performance[0][0], performance[1][0]],
+                            datasets: [
+                                {
+                                    label: "Sharpe Ratio",
+                                    backgroundColor: ["#8e5ea2","#3e95cd", "#3cba9f"],
+                                    data: [performance[2][3],performance[0][3], performance[1][3] ]
+                                }
+                            ]
+                        },
+                        options: {
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: 'Sharpe Ratio 比較',
+                                fontSize: 40
+                            }
+                        }
+                    });
+
+                    new Chart(document.getElementById("bar-chart-4"), {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: [performance[2][0],performance[0][0], performance[1][0]],
+                            datasets: [
+                                {
+                                    label: "Treynor Ratio",
+                                    backgroundColor: ["#8e5ea2","#3e95cd", "#3cba9f"],
+                                    data: [performance[2][4],performance[0][4], performance[1][4] ]
+                                }
+                            ]
+                        },
+                        options: {
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: 'Treynor Ratio 比較',
                                 fontSize: 40
                             }
                         }
@@ -189,6 +286,18 @@
 
             });
         });
+    }
+</script>
+<script>
+    function getPerformance() {
+        document.getElementById("options-view-button").click();
+        const date = document.getElementsByName("date");
+        for (let i = 0; i < date.length; i++) {
+            if (date[i].checked) {
+                document.getElementById("range").value = date[i].value;
+            }
+        }
+        document.getElementById("app-cover").submit();
     }
 </script>
 </body>
