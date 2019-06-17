@@ -97,25 +97,18 @@
                     </div>
                     <div style="height: 620px;width: 610px;display: inline">
                         <div class="carousel-container">
-                            <div class="carousel my-carousel carousel--translate"><input class="carousel__activator"
-                                                                                         type="radio" name="carousel" id="F"
-                                                                                         checked="checked"/><input
-                                        class="carousel__activator" type="radio" name="carousel" id="G"/><input
-                                        class="carousel__activator" type="radio" name="carousel" id="H"/><input
-                                        class="carousel__activator"
-                                        type="radio" name="carousel" id="I"/>
-                                <div class="carousel__controls"><label class="carousel__control carousel__control--backward"
-                                                                       for="I"></label><label
-                                            class="carousel__control carousel__control--forward" for="G"></label></div>
-                                <div class="carousel__controls"><label class="carousel__control carousel__control--backward"
-                                                                       for="F"></label><label
-                                            class="carousel__control carousel__control--forward" for="H"></label></div>
-                                <div class="carousel__controls"><label class="carousel__control carousel__control--backward"
-                                                                       for="G"></label><label
-                                            class="carousel__control carousel__control--forward" for="I"></label></div>
-                                <div class="carousel__controls"><label class="carousel__control carousel__control--backward"
-                                                                       for="H"></label><label
-                                            class="carousel__control carousel__control--forward" for="F"></label></div>
+                            <div class="carousel my-carousel carousel--translate">
+                                <input class="carousel__activator" type="radio" name="carousel" id="F"
+                                       checked="checked"/>
+                                <input class="carousel__activator" type="radio" name="carousel" id="G"/>
+                                <div class="carousel__controls">
+                                    <label class="carousel__control carousel__control--backward" for="G"></label>
+                                    <label class="carousel__control carousel__control--forward" for="G"></label>
+                                </div>
+                                <div class="carousel__controls">
+                                    <label class="carousel__control carousel__control--backward" for="F"></label>
+                                    <label class="carousel__control carousel__control--forward" for="F"></label>
+                                </div>
                                 <div class="carousel__track">
                                     <li class="carousel__slide">
                                         <canvas id="bar-chart-1" width="610" height="310"></canvas>
@@ -123,17 +116,10 @@
                                     <li class="carousel__slide">
                                         <canvas id="bar-chart-2" width="610" height="310"></canvas>
                                     </li>
-                                    <li class="carousel__slide">
-                                        <canvas id="bar-chart-3" width="610" height="310"></canvas>
-                                    </li>
-                                    <li class="carousel__slide">
-                                        <canvas id="bar-chart-4" width="610" height="310"></canvas>
-                                    </li>
                                 </div>
-                                <div class="carousel__indicators"><label class="carousel__indicator" for="F"></label><label
-                                            class="carousel__indicator" for="G"></label><label class="carousel__indicator"
-                                                                                               for="H"></label><label
-                                            class="carousel__indicator" for="I"></label></div>
+                                <div class="carousel__indicators"><label class="carousel__indicator"
+                                                                         for="F"></label><label
+                                            class="carousel__indicator" for="G"></label></div>
                             </div>
                         </div>
                     </div>
@@ -148,20 +134,16 @@
                                 <th>平均日報酬</th>
                                 <th>年化報酬率</th>
                                 <th>年化標準差</th>
-                                <th>Sharpe Ratio</th>
-                                <th>Treynor Ratio</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>高息低波中型30</td>
+                                <td>高息低波台灣中型30指數</td>
                                 <td>0.9308</td>
-                                <td>NT$ 1793580</td>
+                                <td>NT$ 1,793,580</td>
                                 <td>0.023%</td>
                                 <td>4.52%</td>
                                 <td>14.5%</td>
-                                <td>23.67%</td>
-                                <td>4.68%</td>
                             </tr>
                             </tbody>
                         </table>
@@ -290,76 +272,6 @@
                                     ticks: {
                                         callback: value => {
                                             return (value * 100 + "").substring(0, 4) + "%";
-                                        }
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: "Percentage"
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-                    new Chart(document.getElementById("bar-chart-3"), {
-                        type: 'horizontalBar',
-                        data: {
-                            labels: [performance[3][0], performance[2][0], performance[0][0], performance[1][0]],
-                            datasets: [
-                                {
-                                    label: "Sharpe Ratio",
-                                    backgroundColor: ["#9c27b0", "#3281ee", "#23d5b8", "#d5353e"],
-                                    data: [performance[3][3], performance[2][3], performance[0][3], performance[1][3]]
-                                }
-                            ]
-                        },
-                        options: {
-                            legend: {display: false},
-                            title: {
-                                display: true,
-                                text: 'Sharpe Ratio 比較',
-                                fontSize: 20
-                            },
-                            scales: {
-                                xAxes: [{
-                                    ticks: {
-                                        callback: value => {
-                                            return (value * 100 + "").substring(0, 3) + "%";
-                                        }
-                                    },
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: "Percentage"
-                                    }
-                                }]
-                            }
-                        }
-                    });
-
-                    new Chart(document.getElementById("bar-chart-4"), {
-                        type: 'horizontalBar',
-                        data: {
-                            labels: [performance[3][0], performance[2][0], performance[0][0], performance[1][0]],
-                            datasets: [
-                                {
-                                    label: "Treynor Ratio",
-                                    backgroundColor: ["#9c27b0", "#3281ee", "#23d5b8", "#d5353e"],
-                                    data: [performance[3][4], performance[2][4], performance[0][4], performance[1][4]]
-                                }
-                            ]
-                        },
-                        options: {
-                            legend: {display: false},
-                            title: {
-                                display: true,
-                                text: 'Treynor Ratio 比較',
-                                fontSize: 20
-                            },
-                            scales: {
-                                xAxes: [{
-                                    ticks: {
-                                        callback: value => {
-                                            return value > 0 ? (value * 100 + "").substring(0, 3) + "%" : (value * 100 + "").substring(0, 4) + "%";;
                                         }
                                     },
                                     scaleLabel: {
