@@ -44,6 +44,32 @@ const getConstituent = () => {
     });
 };
 
+const getTF001Performance = () => {
+    return new Promise(resolve => {
+        const result = [];
+        csv.fromPath("./Datasets/TF001.csv")
+            .on("data", results => {
+                result.push(results[3]);
+            })
+            .on("end", () => {
+                resolve(result);
+            });
+    });
+};
+
+const getTM100Performance = () => {
+    return new Promise(resolve => {
+        const result = [];
+        csv.fromPath("./Datasets/TM100.csv")
+            .on("data", results => {
+                result.push(results[3]);
+            })
+            .on("end", () => {
+                resolve(result);
+            });
+    });
+};
+
 const getPerformance = () => {
     return new Promise(resolve => {
         const result = [];
@@ -102,7 +128,16 @@ const getPerformance3y = () => {
 };
 
 
-module.exports = {getDate, getIndex, getConstituent, getPerformance, getPerformance1y, getPerformance3y};
+module.exports = {
+    getDate,
+    getIndex,
+    getConstituent,
+    getPerformance,
+    getPerformance1y,
+    getPerformance3y,
+    getTF001Performance,
+    getTM100Performance
+};
 
 
 

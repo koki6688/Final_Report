@@ -1,3 +1,9 @@
 .main-panel{
     background-color: #f1c5ff;
+    height:100%;
+}
+
+.content{
+    background-color: #f1c5ff;
+    height:100%;
 }

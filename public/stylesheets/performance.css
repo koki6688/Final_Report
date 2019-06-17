@@ -1,5 +1,9 @@
 .main-panel{
     background-color: #f1c5ff;
+}
+
+.content{
+    background-color: #f1c5ff;
     height:100%;
 }
 
@@ -11,7 +15,7 @@
   * Control & indicator mixin
 */
 .carousel {
-    height: 615px;
+    height: 400px;
     width: 100%;
     overflow: hidden;
     text-align: center;

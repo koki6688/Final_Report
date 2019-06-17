@@ -39,20 +39,20 @@ router.post('/constituent', (req, res, next) => {
 
 /* GET performance page. */
 router.get('/performance', (req, res, next) => {
-    res.render('performance',{range: "整體績效"});
+    res.render('performance', {range: "整體績效"});
 });
 
 /* POST performance page. */
 router.post('/performance', (req, res, next) => {
     switch (req.body.range) {
         case "performance-1y":
-            res.render('performance',{range: "一年期績效"});
+            res.render('performance', {range: "一年期績效"});
             break;
         case "performance-3y":
-            res.render('performance',{range: "三年期績效"});
+            res.render('performance', {range: "三年期績效"});
             break;
         default:
-            res.render('performance',{range: "整體績效"});
+            res.render('performance', {range: "整體績效"});
             break;
     }
 });
@@ -63,13 +63,17 @@ router.get('/implementation', (req, res, next) => {
 });
 
 
-
 /* GET index graph data */
 router.get('/indexData', (req, res, next) => {
-    dataset.getDate().then(date => {
-        dataset.getIndex().then(index => {
-            res.send({date: date, index: index});
-        });
+    Promise.all([dataset.getDate(), dataset.getIndex()]).then(value => {
+        res.send({date: value[0], index: value[1]});
+    });
+});
+
+/* GET index performance graph data */
+router.get('/indexPerformanceData', (req, res, next) => {
+    Promise.all([dataset.getDate(), dataset.getIndex(), dataset.getTM100Performance(), dataset.getTF001Performance()]).then(value => {
+        res.send({date: value[0], index: [value[1], value[2], value[3]]});
     });
 });
 

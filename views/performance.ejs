@@ -30,7 +30,7 @@
     <link href="./stylesheets/performance.css" rel="stylesheet"/>
 </head>
 
-<body class="hm-gradient" onload="displaychart();">
+<body class="hm-gradient" onload="displaychart();displaychart1()">
 <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
 
@@ -127,6 +127,7 @@
             </form>
             <div class="container-fluid">
                 <div class="row">
+                    <canvas id="line-chart" width="800" height="400"></canvas>
                     <div class="carousel-container">
                         <div class="carousel my-carousel carousel--translate"><input class="carousel__activator" type="radio" name="carousel" id="F" checked="checked" /><input class="carousel__activator" type="radio" name="carousel" id="G" /><input class="carousel__activator" type="radio" name="carousel" id="H" /><input class="carousel__activator"
                                                                                                                                                                                                                                                                                                                                   type="radio" name="carousel" id="I" />
@@ -285,6 +286,48 @@
             }
         }
         document.getElementById("app-cover").submit();
+    }
+</script>
+<script>
+    function displaychart1() {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/indexPerformanceData',
+                success: function (data) {
+                    new Chart(document.getElementById("line-chart"), {
+                        type: 'line',
+                        data: {
+                            labels: data.date,
+                            datasets: [{
+                                data: data.index[0],
+                                label: "SmartBeta",
+                                borderColor: "#9c27b0",
+                                fill: false
+                            },{
+                                data: data.index[1],
+                                label: "TM100",
+                                borderColor: "#3281ee",
+                                fill: false
+                            },{
+                                data: data.index[2],
+                                label: "TF001",
+                                borderColor: "#23d5b8",
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: '指數績效比較(2013-2018)',
+                                fontSize: 40
+                            }
+                        }
+                    });
+                }
+
+            });
+        });
     }
 </script>
 </body>
