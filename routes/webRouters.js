@@ -99,4 +99,18 @@ router.get('/performanceData_3y', (req, res, next) => {
     });
 });
 
+/* GET implementation cumulative compensation graph data */
+router.get('/cumulativeCompensation', (req, res, next) => {
+    Promise.all([dataset.getDate(), dataset.getImplementation()]).then(value => {
+        res.send({date: value[0], cumulativeCompensation: value[1]});
+    });
+});
+
+/* GET implementation performance compare graph data */
+router.get('/implementation_performance', (req, res, next) => {
+    dataset.getImplementationPerformance().then(performance => {
+        res.send({performance: performance});
+    });
+});
+
 module.exports = router;

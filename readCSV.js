@@ -127,6 +127,37 @@ const getPerformance3y = () => {
     });
 };
 
+const getImplementation = () => {
+    return new Promise(resolve => {
+        const result = [];
+        csv.fromPath("./Datasets/Implementation_Cumulative_Compensation.csv")
+            .on("data", results => {
+                result.push(results[3]);
+            })
+            .on("end", () => {
+                resolve(result);
+            });
+    });
+};
+
+const getImplementationPerformance = () => {
+    return new Promise(resolve => {
+        const result = [];
+
+        csv.fromPath("./Datasets/implementation_performance.csv")
+            .on("data", results => {
+                let index = results[0];
+                let annualizedReturn = results[2];
+                let annualizedSTD = results[3];
+                let sharpeRatio = results[4];
+                let treynorRatio = results[5];
+                result.push([index, annualizedReturn, annualizedSTD, sharpeRatio, treynorRatio]);
+            })
+            .on("end", () => {
+                resolve(result);
+            });
+    });
+};
 
 module.exports = {
     getDate,
@@ -136,7 +167,9 @@ module.exports = {
     getPerformance1y,
     getPerformance3y,
     getTF001Performance,
-    getTM100Performance
+    getTM100Performance,
+    getImplementation,
+    getImplementationPerformance
 };
 
 

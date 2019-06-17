@@ -28,6 +28,7 @@
             crossorigin="anonymous"></script>
 
     <link href="./stylesheets/performance.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 </head>
 
 <body class="hm-gradient" onload="displaychart1();displaychart()">
@@ -94,7 +95,7 @@
                     <input type="checkbox" id="options-view-button">
                     <div id="select-button" class="brd">
                         <div id="selected-value">
-                            <span><%=range%></span>
+                            <span><%= range %></span>
                         </div>
                         <input name="range" id="range" hidden>
                         <div id="chevrons">
@@ -129,12 +130,25 @@
                 <div class="row">
                     <canvas id="line-chart" width="1200" height="620"></canvas>
                     <div class="carousel-container">
-                        <div class="carousel my-carousel carousel--translate"><input class="carousel__activator" type="radio" name="carousel" id="F" checked="checked" /><input class="carousel__activator" type="radio" name="carousel" id="G" /><input class="carousel__activator" type="radio" name="carousel" id="H" /><input class="carousel__activator"
-                                                                                                                                                                                                                                                                                                                                  type="radio" name="carousel" id="I" />
-                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="I"></label><label class="carousel__control carousel__control--forward" for="G"></label></div>
-                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="F"></label><label class="carousel__control carousel__control--forward" for="H"></label></div>
-                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="G"></label><label class="carousel__control carousel__control--forward" for="I"></label></div>
-                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward" for="H"></label><label class="carousel__control carousel__control--forward" for="F"></label></div>
+                        <div class="carousel my-carousel carousel--translate"><input class="carousel__activator"
+                                                                                     type="radio" name="carousel" id="F"
+                                                                                     checked="checked"/><input
+                                    class="carousel__activator" type="radio" name="carousel" id="G"/><input
+                                    class="carousel__activator" type="radio" name="carousel" id="H"/><input
+                                    class="carousel__activator"
+                                    type="radio" name="carousel" id="I"/>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward"
+                                                                   for="I"></label><label
+                                        class="carousel__control carousel__control--forward" for="G"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward"
+                                                                   for="F"></label><label
+                                        class="carousel__control carousel__control--forward" for="H"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward"
+                                                                   for="G"></label><label
+                                        class="carousel__control carousel__control--forward" for="I"></label></div>
+                            <div class="carousel__controls"><label class="carousel__control carousel__control--backward"
+                                                                   for="H"></label><label
+                                        class="carousel__control carousel__control--forward" for="F"></label></div>
                             <div class="carousel__track">
                                 <li class="carousel__slide">
                                     <canvas id="bar-chart-1" style="width: 100%;height: 100%"></canvas>
@@ -149,7 +163,10 @@
                                     <canvas id="bar-chart-4" style="width: 100%;height: 100%"></canvas>
                                 </li>
                             </div>
-                            <div class="carousel__indicators"><label class="carousel__indicator" for="F"></label><label class="carousel__indicator" for="G"></label><label class="carousel__indicator" for="H"></label><label class="carousel__indicator" for="I"></label></div>
+                            <div class="carousel__indicators"><label class="carousel__indicator" for="F"></label><label
+                                        class="carousel__indicator" for="G"></label><label class="carousel__indicator"
+                                                                                           for="H"></label><label
+                                        class="carousel__indicator" for="I"></label></div>
                         </div>
                     </div>
                 </div>
@@ -163,8 +180,8 @@
 <script>
     function displaychart() {
         $(function () {
-            let performanceRange = `<%=range%>`;
-            let url ;
+            let performanceRange = `<%= range %>`;
+            let url;
 
             switch (performanceRange) {
                 case "一年期績效":
@@ -174,7 +191,7 @@
                     url = '/performanceData_3y';
                     break;
                 default:
-                    url='/performanceData';
+                    url = '/performanceData';
                     break;
             }
 
@@ -186,21 +203,34 @@
                     new Chart(document.getElementById("bar-chart-1"), {
                         type: 'horizontalBar',
                         data: {
-                            labels: [performance[2][0],performance[0][0], performance[1][0]],
+                            labels: [performance[2][0], performance[0][0], performance[1][0]],
                             datasets: [
                                 {
                                     label: "年化報酬率",
-                                    backgroundColor: ["#9c27b0","#3281ee", "#23d5b8"],
-                                    data: [performance[2][1],performance[0][1], performance[1][1] ]
+                                    backgroundColor: ["#9c27b0", "#3281ee", "#23d5b8"],
+                                    data: [performance[2][1], performance[0][1], performance[1][1]]
                                 }
                             ]
                         },
                         options: {
-                            legend: { display: false },
+                            legend: {display: false},
                             title: {
                                 display: true,
                                 text: '年化報酬率績效比較',
                                 fontSize: 40
+                            },
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        callback: value => {
+                                            return (value * 100 + "").substring(0, 3) + "%";
+                                        }
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "Percentage"
+                                    }
+                                }]
                             }
                         }
                     });
@@ -208,21 +238,34 @@
                     new Chart(document.getElementById("bar-chart-2"), {
                         type: 'horizontalBar',
                         data: {
-                            labels: [performance[2][0],performance[0][0], performance[1][0]],
+                            labels: [performance[2][0], performance[0][0], performance[1][0]],
                             datasets: [
                                 {
                                     label: "年化標準差",
-                                    backgroundColor: ["#9c27b0","#3281ee", "#23d5b8"],
-                                    data: [performance[2][2],performance[0][2], performance[1][2] ]
+                                    backgroundColor: ["#9c27b0", "#3281ee", "#23d5b8"],
+                                    data: [performance[2][2], performance[0][2], performance[1][2]]
                                 }
                             ]
                         },
                         options: {
-                            legend: { display: false },
+                            legend: {display: false},
                             title: {
                                 display: true,
                                 text: '年化標準差比較',
                                 fontSize: 40
+                            },
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        callback: value => {
+                                            return (value * 100 + "").substring(0, 4) + "%";
+                                        }
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "Percentage"
+                                    }
+                                }]
                             }
                         }
                     });
@@ -230,21 +273,34 @@
                     new Chart(document.getElementById("bar-chart-3"), {
                         type: 'horizontalBar',
                         data: {
-                            labels: [performance[2][0],performance[0][0], performance[1][0]],
+                            labels: [performance[2][0], performance[0][0], performance[1][0]],
                             datasets: [
                                 {
                                     label: "Sharpe Ratio",
-                                    backgroundColor: ["#9c27b0","#3281ee", "#23d5b8"],
-                                    data: [performance[2][3],performance[0][3], performance[1][3] ]
+                                    backgroundColor: ["#9c27b0", "#3281ee", "#23d5b8"],
+                                    data: [performance[2][3], performance[0][3], performance[1][3]]
                                 }
                             ]
                         },
                         options: {
-                            legend: { display: false },
+                            legend: {display: false},
                             title: {
                                 display: true,
                                 text: 'Sharpe Ratio 比較',
                                 fontSize: 40
+                            },
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        callback: value => {
+                                            return (value * 100 + "").substring(0, 3) + "%";
+                                        }
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "Percentage"
+                                    }
+                                }]
                             }
                         }
                     });
@@ -252,21 +308,34 @@
                     new Chart(document.getElementById("bar-chart-4"), {
                         type: 'horizontalBar',
                         data: {
-                            labels: [performance[2][0],performance[0][0], performance[1][0]],
+                            labels: [performance[2][0], performance[0][0], performance[1][0]],
                             datasets: [
                                 {
                                     label: "Treynor Ratio",
-                                    backgroundColor: ["#9c27b0","#3281ee", "#23d5b8"],
-                                    data: [performance[2][4],performance[0][4], performance[1][4] ]
+                                    backgroundColor: ["#9c27b0", "#3281ee", "#23d5b8"],
+                                    data: [performance[2][4], performance[0][4], performance[1][4]]
                                 }
                             ]
                         },
                         options: {
-                            legend: { display: false },
+                            legend: {display: false},
                             title: {
                                 display: true,
                                 text: 'Treynor Ratio 比較',
                                 fontSize: 40
+                            },
+                            scales: {
+                                xAxes: [{
+                                    ticks: {
+                                        callback: value => {
+                                            return value > 0 ? (value * 100 + "").substring(0, 3) + "%" : (value * 100 + "").substring(0, 4) + "%";;
+                                        }
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "Percentage"
+                                    }
+                                }]
                             }
                         }
                     });
@@ -304,12 +373,12 @@
                                 label: "SmartBeta",
                                 borderColor: "#9c27b0",
                                 fill: false
-                            },{
+                            }, {
                                 data: data.index[1],
                                 label: "TM100",
                                 borderColor: "#3281ee",
                                 fill: false
-                            },{
+                            }, {
                                 data: data.index[2],
                                 label: "TF001",
                                 borderColor: "#23d5b8",
