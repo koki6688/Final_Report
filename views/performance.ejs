@@ -293,7 +293,7 @@
                                 xAxes: [{
                                     ticks: {
                                         callback: value => {
-                                            return (value * 100 + "").substring(0, 3) + "%";
+                                            return value > 0 ? (value * 100 + "").substring(0, 3) + "%" : (value * 100 + "").substring(0, 4) + "%";;
                                         }
                                     },
                                     scaleLabel: {
