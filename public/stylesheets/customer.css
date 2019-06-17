@@ -1,9 +1,6 @@
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
-@import url(https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.3/css/mdb.min.css);
-
-.hm-gradient {
+.main-panel {
     background-color: #f1c5ff;
+    height: 100%;
 }
-.darken-grey-text {
-    color: #2E2E2E;
-}
+
+
